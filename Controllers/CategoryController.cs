@@ -5,6 +5,14 @@ namespace Day3_sv.Controllers
 {
     public class CategoryController : Controller
     {  
+        //ghi log
+        private ILogger<CategoryController> _logger;
+        //khoi tao logger
+        public CategoryController(ILogger<CategoryController> logger)
+        {
+            _logger = logger;
+        }
+        //gia lap csdl
         private static List<Category> _categories = new List<Category>()
         {
             new Category() { Id = 1, Name = "Category 1" },
@@ -20,6 +28,7 @@ namespace Day3_sv.Controllers
         // GET: CategoryController/Details/5
         public ActionResult Details(int id)
         {
+            _logger.LogInformation("Đang lấy mã danh mục sản phầm " + id);
             var category = _categories.FirstOrDefault(c => c.Id == id);
             if (category == null)
             {
@@ -63,7 +72,7 @@ namespace Day3_sv.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
         {
-            var existingCategory = _categories.FirstOrDefault(c => c.Id == category.Id);
+            var existingCategory = _categories.FirstOrDefault(c => c.Id == category.Id);       
             if (existingCategory == null)
             {
                 return NotFound();
